@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "655611597234",
+    "project_id": "orgart-95c33",
+    "storage_bucket": "orgart-95c33.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:655611597234:android:541aa2468ab4514d8d54ab",
+        "android_client_info": {
+          "package_name": "com.orgart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "655611597234-kfiqtjj7b5a6kq57j4s0od86uuc4c76p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzBPQd7rXpFQky2v5SV0IUwfvH-WgK4xE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "655611597234-kfiqtjj7b5a6kq57j4s0od86uuc4c76p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
