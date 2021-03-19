@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">orgArt</string>
+    <string name="facebook_app_id">785935812319835</string>
+    <string name="fb_login_protocol_scheme">fb785935812319835</string>
+
 </resources>
