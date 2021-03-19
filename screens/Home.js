@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React ,{useContext} from 'react';
 import {
     StyleSheet,
     View,
@@ -8,10 +8,12 @@ import {
     Image,
     FlatList
 } from 'react-native';
+import {AuthContext} from '../navigation/AuthProvider';
 
 import { images, icons, COLORS, SIZES } from '../constants';
 
 const Home = ({ navigation }) => {
+    const {logout} =useContext(AuthContext);
 
     // Dummy Data
     const [newPlants, setNewPlants] = React.useState([
@@ -102,7 +104,7 @@ const Home = ({ navigation }) => {
                         top: '15%',
                         left: 7,
                     }}
-                    onPress={() => { console.log("Focus on pressed") }}
+                    onPress={() =>{} }
                 >
                     <Image
                         source={item.favourite ? icons.heartRed : icons.heartGreenOutline}
@@ -189,7 +191,7 @@ const Home = ({ navigation }) => {
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                             <Text style={{ color: COLORS.white}}>New Plants</Text>
                             <TouchableOpacity
-                                onPress={() => { console.log("Focus on pressed") }}
+                                onPress={() => logout()}
                             >
                                 <Image
                                     source={icons.focus}

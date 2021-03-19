@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "655611597234-l4scdc1msfsafooijqoiof3ktkqi6gs3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orgart",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
           "client_id": "655611597234-kfiqtjj7b5a6kq57j4s0od86uuc4c76p.apps.googleusercontent.com",
           "client_type": 3
         }

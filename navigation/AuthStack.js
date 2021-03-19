@@ -2,7 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import {View} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
+import {GoogleSignin} from '@react-native-community/google-signin';
 // screens
 import { LoginScreen,OnboardingScreen,SignupScreen} from "../screens/";
 import { useEffect } from "react";
@@ -22,6 +22,9 @@ const AuthStack=()=>{
             }else{
                 setIsFirstLaunch(false);
             }
+        });
+        GoogleSignin.configure({
+            webClientId:'655611597234-kfiqtjj7b5a6kq57j4s0od86uuc4c76p.apps.googleusercontent.com',
         });
     },[]);
     if(isFirstLaunch===null){
