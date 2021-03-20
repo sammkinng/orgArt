@@ -6,6 +6,7 @@ import OrderDelivery from './OrderDelivery';
 import OnboardingScreen from './OnboardingScreen';
 import LoginScreen from './LoginScreen';
 import SignupScreen from './SignupScreen';
+import ForgotScreen from './ForgotScreen';
 
 export {
     Home,
@@ -16,4 +17,5 @@ export {
     OnboardingScreen,
     LoginScreen,
     SignupScreen,
+    ForgotScreen
 };

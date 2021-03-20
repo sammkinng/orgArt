@@ -3,7 +3,7 @@ import { useState } from "react";
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from "@react-native-community/google-signin";
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
-
+import Snackbar from 'react-native-snackbar';
 export const AuthContext=createContext();
 
 export const AuthProvider=({children})=>{
@@ -67,7 +67,22 @@ export const AuthProvider=({children})=>{
                     }catch(e){
                         console.log(e);
                     }
-                }
+                },
+                passwordReset: async(email) => {
+                    try {
+                        await auth().sendPasswordResetEmail(email);
+                        Snackbar.show({
+                            text: 'Password reset link sent to give email',
+                            duration: Snackbar.LENGTH_SHORT,
+                        });
+                    } catch (error) {
+                        console.log(error);
+                        Snackbar.show({
+                            text: 'Please try again',
+                            duration: Snackbar.LENGTH_SHORT,
+                          });
+                    }
+                },
             }}
         >
             {children}
