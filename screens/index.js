@@ -8,6 +8,7 @@ import LoginScreen from './LoginScreen';
 import SignupScreen from './SignupScreen';
 import ForgotScreen from './ForgotScreen';
 import QuestionScreen from './QuestionScreen';
+import ExtraScreen from './ExtraScreen';
 
 export {
     Home,
@@ -19,5 +20,6 @@ export {
     LoginScreen,
     SignupScreen,
     ForgotScreen,
-    QuestionScreen
+    QuestionScreen,
+    ExtraScreen
 };
