@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
-import { PlantDetail,Restaurant, OrderDelivery ,Home1} from "../screens/";
+import { PlantDetail,Restaurant, OrderDelivery ,Home1,QuestionScreen} from "../screens/";
 
 
 // extra screens
@@ -23,6 +23,7 @@ const AppStack=()=>{
                 <Stack.Screen name="Home1" component={Home1} />
                 <Stack.Screen name="Restaurant" component={Restaurant} />
                 <Stack.Screen name="OrderDelivery" component={OrderDelivery} />
+                <Stack.Screen name="QuestionScreen" component={QuestionScreen}/>
             </Stack.Navigator>
     )
 }

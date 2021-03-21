@@ -61,7 +61,7 @@ const AuthStack=()=>{
                                 size={25}
                                 backgroundColor='#f9fafd'
                                 color="#333"
-                                onPress={()=>navigation.navigate('Login')}
+                                onPress={()=>navigation.goBack()}
                             />
                         </View>
                     ) 
@@ -84,7 +84,7 @@ const AuthStack=()=>{
                                 size={25}
                                 backgroundColor='#fff'
                                 color="#333"
-                                onPress={()=>navigation.navigate('Login')}
+                                onPress={()=>navigation.goBack()}
                             />
                         </View>
                     ) 
