@@ -8,7 +8,7 @@ import {
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import MapViewDirections from "react-native-maps-directions";
 
-import { COLORS, FONTS, icons, SIZES, GOOGLE_API_KEY } from "../constants"
+import { COLORS, icons, SIZES, GOOGLE_API_KEY } from "../constants"
 
 const OrderDelivery = ({ route, navigation }) => {
 

@@ -19,7 +19,7 @@ export const AuthProvider=({children})=>{
                     }catch(e){
                         console.log(e);
                         Snackbar.show({
-                            text: 'Email address or password is incorrect',
+                            text: 'Email or password is incorrect',
                             duration: Snackbar.LENGTH_SHORT,
                         });
                     }

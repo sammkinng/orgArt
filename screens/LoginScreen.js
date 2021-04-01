@@ -51,7 +51,7 @@ const LoginScreen = ({navigation}) => {
           if(typeof(email)==='string'&&typeof(password)=='string'){
             if(email.length==0||password.length==0){
               Snackbar.show({
-                text: 'Please fill all fields',
+                text: 'Please fill all the fields',
                 duration: Snackbar.LENGTH_SHORT,
               });
             }else{
@@ -59,7 +59,7 @@ const LoginScreen = ({navigation}) => {
           // console.log(typeof(email)=='string');
         }else{
           Snackbar.show({
-            text: 'Please fill all fields',
+            text: 'Please fill all the fields',
             duration: Snackbar.LENGTH_SHORT,
           });
         }

@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {View, Text, TouchableOpacity, Platform, StyleSheet} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import SocialButton from '../components/SocialButton';
@@ -89,7 +90,11 @@ const handleConfirmPasswordChange = (val) => {
   const {register,fbLogin,googleLogin} = useContext(AuthContext);
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView 
+    style={{backgroundColor:'#f9fafd'}}
+    resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.container}
+      scrollEnabled={false}>
       <Text style={styles.text}>Create an account</Text>
 
       <FormInput
@@ -103,7 +108,7 @@ const handleConfirmPasswordChange = (val) => {
       />
       {data.check_textInputChange ? 
         <Text style={[styles.color_textPrivate,{color:'#f00'}]}>
-          Invalid format
+          Please enter valid email
         </Text>: null}
       <FormInput
         labelValue={data['password']}
@@ -132,7 +137,7 @@ const handleConfirmPasswordChange = (val) => {
         onPress={() => {
           if(data['confirm_password'].length===0||data['password'].length===0||data['email'].length===0){
             Snackbar.show({
-              text: 'Please fill all fields',
+              text: 'Please fill all the fields',
               duration: Snackbar.LENGTH_SHORT,
             });
           }else{
@@ -141,10 +146,7 @@ const handleConfirmPasswordChange = (val) => {
             data['check_pw_match']===false){
           register(data['email'], data['password'])}
         else{
-          Snackbar.show({
-            text: 'Please try again',
-            duration: Snackbar.LENGTH_SHORT,
-          });
+          
         }
         }}}
       />
@@ -191,7 +193,7 @@ const handleConfirmPasswordChange = (val) => {
         onPress={() => navigation.goBack()}>
         <Text style={styles.navButtonText}>Have an account? Sign In</Text>
       </TouchableOpacity>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -200,7 +202,6 @@ export default SignupScreen;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f9fafd',
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
