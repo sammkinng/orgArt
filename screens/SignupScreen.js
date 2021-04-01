@@ -4,62 +4,166 @@ import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import SocialButton from '../components/SocialButton';
 import {AuthContext} from '../navigation/AuthProvider';
-
+import Snackbar from 'react-native-snackbar';
 const SignupScreen = ({navigation}) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
+  const [data, setData] = React.useState({
+    email: '',
+    password: '',
+    confirm_password: '',
+    check_textInputChange: false,
+    check_pw:false,
+    check_pw_match:false
+    // secureTextEntry: true,
+    // confirm_secureTextEntry: true,
+  });
+  const textInputChange = (val) => {
+    var tt=/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    if( tt.test(val) ) {
+        setData({
+            ...data,
+            email: val,
+            check_textInputChange: false
+        });
+        console.log('true');
+    } else {
+        setData({
+            ...data,
+            email: val,
+            check_textInputChange: true
+        });
+        console.log('false');
+    }
+}
 
-  const {register} = useContext(AuthContext);
+const handlePasswordChange = (val) => {
+  var tt=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if( tt.test(val) ) {
+      setData({
+          ...data,
+          password: val,
+          check_pw: false
+      });
+      console.log('true');
+  } else {
+      setData({
+          ...data,
+          password: val,
+          check_pw: true
+      });
+      console.log('false');
+  }
+}
+
+const handleConfirmPasswordChange = (val) => {
+    if(val===data['password']){
+    setData({
+        ...data,
+        confirm_password: val,
+        check_pw_match:false
+    });
+    console.log('true');
+  }
+    else{
+      setData({
+        ...data,
+        confirm_password: val,
+        check_pw_match:true
+    });
+    console.log('cnfrmfail');
+    }
+}
+
+// const updateSecureTextEntry = () => {
+//     setData({
+//         ...data,
+//         secureTextEntry: !data.secureTextEntry
+//     });
+// }
+
+// const updateConfirmSecureTextEntry = () => {
+//     setData({
+//         ...data,
+//         confirm_secureTextEntry: !data.confirm_secureTextEntry
+//     });
+// }
+  const {register,fbLogin,googleLogin} = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Create an account</Text>
 
       <FormInput
-        labelValue={email}
-        onChangeText={(userEmail) => setEmail(userEmail)}
+        labelValue={data['email']}
+        onChangeText={(userEmail) => textInputChange(userEmail)}
         placeholderText="Email"
         iconType="user"
         keyboardType="email-address"
         autoCapitalize="none"
         autoCorrect={false}
       />
-
+      {data.check_textInputChange ? 
+        <Text style={[styles.color_textPrivate,{color:'#f00'}]}>
+          Invalid format
+        </Text>: null}
       <FormInput
-        labelValue={password}
-        onChangeText={(userPassword) => setPassword(userPassword)}
+        labelValue={data['password']}
+        onChangeText={(userPassword) => handlePasswordChange(userPassword)}
         placeholderText="Password"
         iconType="lock"
         secureTextEntry={true}
       />
-
+      {data.check_pw ? 
+        <Text style={[styles.color_textPrivate,{color:'#f00'}]}>
+            Password must contain atleast 1 capital letter, special symbol and a number and min length 8
+        </Text>: null}
       <FormInput
-        labelValue={confirmPassword}
-        onChangeText={(userPassword) => setConfirmPassword(userPassword)}
+        labelValue={data['confirmPassword']}
+        onChangeText={(userPassword) => handleConfirmPasswordChange(userPassword)}
         placeholderText="Confirm Password"
         iconType="lock"
         secureTextEntry={true}
       />
-
+      {data.check_pw_match ? 
+        <Text style={[styles.color_textPrivate,{color:'#f00'}]}>
+          Passwords do not match
+        </Text>: null}
       <FormButton
         buttonTitle="Sign Up"
-        onPress={() => register(email, password)}
+        onPress={() => {
+          if(data['confirm_password'].length===0||data['password'].length===0||data['email'].length===0){
+            Snackbar.show({
+              text: 'Please fill all fields',
+              duration: Snackbar.LENGTH_SHORT,
+            });
+          }else{
+          if(data['check_textInputChange']===false&&
+            data['check_pw']===false&&
+            data['check_pw_match']===false){
+          register(data['email'], data['password'])}
+        else{
+          Snackbar.show({
+            text: 'Please try again',
+            duration: Snackbar.LENGTH_SHORT,
+          });
+        }
+        }}}
       />
 
       <View style={styles.textPrivate}>
         <Text style={styles.color_textPrivate}>
           By registering, you confirm that you accept our{' '}
         </Text>
-        <TouchableOpacity onPress={() => alert('Terms Clicked!')}>
+        <TouchableOpacity onPress={()=>navigation.navigate('TermsScreen')}>
           <Text style={[styles.color_textPrivate, {color: '#e88832'}]}>
             Terms of service
           </Text>
         </TouchableOpacity>
         <Text style={styles.color_textPrivate}> and </Text>
-        <Text style={[styles.color_textPrivate, {color: '#e88832'}]}>
-          Privacy Policy
-        </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('PrivacyScreen')}>
+          <Text style={[styles.color_textPrivate, {color: '#e88832'}]}>
+            Privacy policy
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {Platform.OS === 'android' ? (
@@ -69,7 +173,7 @@ const SignupScreen = ({navigation}) => {
             btnType="facebook"
             color="#4867aa"
             backgroundColor="#e6eaf4"
-            onPress={() => {}}
+            onPress={() => fbLogin()}
           />
     
           <SocialButton
@@ -77,7 +181,7 @@ const SignupScreen = ({navigation}) => {
             btnType="google"
             color="#de4d41"
             backgroundColor="#f5e7ea"
-            onPress={() => {}}
+            onPress={() => googleLogin()}
           />
         </View>
        ) : null} 

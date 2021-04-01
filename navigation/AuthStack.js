@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {GoogleSignin} from '@react-native-community/google-signin';
 // screens
-import { LoginScreen,OnboardingScreen,SignupScreen,ForgotScreen} from "../screens/";
+import { LoginScreen,OnboardingScreen,SignupScreen,ForgotScreen,TermsScreen,PrivacyScreen} from "../screens/";
 import { useEffect } from "react";
 import  AsyncStorage  from "@react-native-community/async-storage";
 
@@ -70,6 +70,52 @@ const AuthStack=()=>{
             <Stack.Screen 
                 name="ForgotScreen"
                 component={ForgotScreen}
+                options={({navigation})=>({
+                    title:'',
+                    headerStyle:{
+                        backgroundColor:'#fff',
+                        shadowColor:'#fff',
+                        elevation:0
+                    },
+                    headerLeft:()=>(
+                        <View style={{marginLeft:10}}>
+                            <FontAwesome.Button
+                                name='long-arrow-left'
+                                size={25}
+                                backgroundColor='#fff'
+                                color="#333"
+                                onPress={()=>navigation.goBack()}
+                            />
+                        </View>
+                    ) 
+                })}
+            />
+            <Stack.Screen 
+                name="TermsScreen"
+                component={TermsScreen}
+                options={({navigation})=>({
+                    title:'',
+                    headerStyle:{
+                        backgroundColor:'#fff',
+                        shadowColor:'#fff',
+                        elevation:0
+                    },
+                    headerLeft:()=>(
+                        <View style={{marginLeft:10}}>
+                            <FontAwesome.Button
+                                name='long-arrow-left'
+                                size={25}
+                                backgroundColor='#fff'
+                                color="#333"
+                                onPress={()=>navigation.goBack()}
+                            />
+                        </View>
+                    ) 
+                })}
+            />
+            <Stack.Screen 
+                name="PrivacyScreen"
+                component={PrivacyScreen}
                 options={({navigation})=>({
                     title:'',
                     headerStyle:{

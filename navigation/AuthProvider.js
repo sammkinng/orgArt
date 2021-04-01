@@ -18,6 +18,10 @@ export const AuthProvider=({children})=>{
                         await auth().signInWithEmailAndPassword(email,password);
                     }catch(e){
                         console.log(e);
+                        Snackbar.show({
+                            text: 'Email address or password is incorrect',
+                            duration: Snackbar.LENGTH_SHORT,
+                        });
                     }
                 },
                 googleLogin:async()=>{
@@ -27,6 +31,10 @@ export const AuthProvider=({children})=>{
                         await auth().signInWithCredential(googleCredential);
                     } catch (e) {
                         console.log(e);
+                        Snackbar.show({
+                            text: 'Please try again',
+                            duration: Snackbar.LENGTH_SHORT,
+                          });
                     }
                 },
                 fbLogin:async()=>{
@@ -52,6 +60,10 @@ export const AuthProvider=({children})=>{
                       
                     } catch (error) {
                         console.log(error);
+                        Snackbar.show({
+                            text: 'Please try again',
+                            duration: Snackbar.LENGTH_SHORT,
+                          });
                     }
                 },
                 register:async(email,password)=>{
@@ -59,6 +71,10 @@ export const AuthProvider=({children})=>{
                         await auth().createUserWithEmailAndPassword(email,password);
                     }catch(e){
                         console.log(e);
+                        Snackbar.show({
+                            text: 'Email address already in use',
+                            duration: Snackbar.LENGTH_SHORT,
+                          });
                     }
                 },
                 logout:async()=>{
@@ -66,6 +82,10 @@ export const AuthProvider=({children})=>{
                         await auth().signOut();
                     }catch(e){
                         console.log(e);
+                        Snackbar.show({
+                            text: 'Please try again',
+                            duration: Snackbar.LENGTH_SHORT,
+                          });
                     }
                 },
                 passwordReset: async(email) => {

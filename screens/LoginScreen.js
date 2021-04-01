@@ -12,6 +12,7 @@ import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import SocialButton from '../components/SocialButton';
 import {AuthContext} from '../navigation/AuthProvider';
+import Snackbar from 'react-native-snackbar';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState();
@@ -46,7 +47,23 @@ const LoginScreen = ({navigation}) => {
 
       <FormButton
         buttonTitle="Sign In"
-        onPress={() => login(email, password)}
+        onPress={() => {
+          if(typeof(email)==='string'&&typeof(password)=='string'){
+            if(email.length==0||password.length==0){
+              Snackbar.show({
+                text: 'Please fill all fields',
+                duration: Snackbar.LENGTH_SHORT,
+              });
+            }else{
+            login(email, password)}
+          // console.log(typeof(email)=='string');
+        }else{
+          Snackbar.show({
+            text: 'Please fill all fields',
+            duration: Snackbar.LENGTH_SHORT,
+          });
+        }
+      }}
       />
 
       <TouchableOpacity style={styles.forgotButton} onPress={() => navigation.navigate('ForgotScreen')}>
