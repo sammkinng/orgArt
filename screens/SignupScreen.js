@@ -7,7 +7,7 @@ import SocialButton from '../components/SocialButton';
 import {AuthContext} from '../navigation/AuthProvider';
 import Snackbar from 'react-native-snackbar';
 const SignupScreen = ({navigation}) => {
-  const [data, setData] = React.useState({
+  const [data, setData] = useState({
     email: '',
     password: '',
     confirm_password: '',
