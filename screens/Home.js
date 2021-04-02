@@ -1,19 +1,18 @@
 
-import React ,{useContext} from 'react';
+import React, { useContext } from 'react';
 import {
     StyleSheet,
     View,
     Text,
     TouchableOpacity,
     Image,
-    FlatList
+    FlatList,
 } from 'react-native';
-import {AuthContext} from '../navigation/AuthProvider';
+import { windowHeight, windowWidth } from '../utils/Dimentions';
 
 import { images, icons, COLORS, SIZES } from '../constants';
 
 const Home = ({ navigation }) => {
-    const {logout} =useContext(AuthContext);
 
     // Dummy Data
     const [newPlants, setNewPlants] = React.useState([
@@ -43,28 +42,7 @@ const Home = ({ navigation }) => {
         },
     ]);
 
-    const [friendList, setFriendList] = React.useState([
-        {
-            id: 0,
-            img: images.profile1,
-        },
-        {
-            id: 1,
-            img: images.profile2,
-        },
-        {
-            id: 2,
-            img: images.profile3,
-        },
-        {
-            id: 3,
-            img: images.profile4,
-        },
-        {
-            id: 4,
-            img: images.profile5,
-        },
-    ]);
+
 
     React.useEffect(() => {
     }, []);
@@ -104,7 +82,7 @@ const Home = ({ navigation }) => {
                         top: '15%',
                         left: 7,
                     }}
-                    onPress={() =>{} }
+                    onPress={() => { }}
                 >
                     <Image
                         source={item.favourite ? icons.heartRed : icons.heartGreenOutline}
@@ -119,63 +97,7 @@ const Home = ({ navigation }) => {
         )
     }
 
-    function renderFriendsComponent() {
-        if (friendList.length == 0) {
-            return (
-                <View></View>
-            )
-        } else if (friendList.length <= 3) {
-            return (
-                friendList.map((item, index) => (
-                    <View
-                        key={`friend-${index}`}
-                        style={index == 0 ? { flexDirection: 'row' } : { flexDirection: 'row', marginLeft: -20 }}
-                    >
-                        <Image
-                            source={item.img}
-                            resizeMode="cover"
-                            style={{
-                                width: 50,
-                                height: 50,
-                                borderRadius: 25,
-                                borderWidth: 3,
-                                borderColor: COLORS.primary
-                            }}
-                        />
-                    </View>
-                ))
-            )
-        } else {
-            return (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    {friendList.map((item, index) => {
-                        if (index <= 2) {
-                            return (
-                                <View
-                                    key={`friend-${index}`}
-                                    style={index == 0 ? {} : { marginLeft: -20 }}
-                                >
-                                    <Image
-                                        source={item.img}
-                                        resizeMode="cover"
-                                        style={{
-                                            width: 50,
-                                            height: 50,
-                                            borderRadius: 25,
-                                            borderWidth: 3,
-                                            borderColor: COLORS.primary
-                                        }}
-                                    />
-                                </View>
-                            )
-                        }
-                    })}
 
-                    <Text style={{ marginLeft: 5, color: COLORS.secondary }}>+{friendList.length - 3} More</Text>
-                </View>
-            )
-        }
-    }
 
     return (
         <View style={styles.container}>
@@ -189,12 +111,12 @@ const Home = ({ navigation }) => {
                 }}>
                     <View style={{ marginTop: SIZES.padding * 2, marginHorizontal: SIZES.padding }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Text style={{ color: COLORS.white}}>New Plants</Text>
+                            <Text style={{ color: COLORS.white }}>New Plants</Text>
                             <TouchableOpacity
-                                onPress={() => logout()}
+                                onPress={() => navigation.navigate('UserProfileScreen')}
                             >
                                 <Image
-                                    source={icons.focus}
+                                    source={icons.user}
                                     resizeMode="contain"
                                     style={{
                                         width: 20,
@@ -227,7 +149,7 @@ const Home = ({ navigation }) => {
                 }}>
                     <View style={{ marginTop: SIZES.font, marginHorizontal: SIZES.padding }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Text style={{ color: COLORS.secondary}}>Today's Share</Text>
+                            <Text style={{ color: COLORS.secondary }}>Today's Share</Text>
 
                             <TouchableOpacity
                                 onPress={() => { console.log("See All on pressed") }}
@@ -289,48 +211,20 @@ const Home = ({ navigation }) => {
                 </View>
             </View>
 
-            {/* Added Friend */}
             <View style={{ height: "20%", backgroundColor: COLORS.lightGray }}>
                 <View style={{
                     flex: 1,
-                    backgroundColor: COLORS.lightGray
+                    backgroundColor: COLORS.lightGray,
+                    alignItems: 'center'
                 }}>
-                    <View style={{ marginTop: SIZES.radius, marginHorizontal: SIZES.padding }}>
-                        <Text style={{ color: COLORS.secondary}}>Added Friends</Text>
-                        <Text style={{ color: COLORS.secondary }}>{friendList.length} total</Text>
-                        <View style={{ flexDirection: 'row', height: '60%' }}>
-                            {/* Friends */}
-                            <View style={{ flex: 1.3, flexDirection: 'row', alignItems: 'center' }}>
-                                {renderFriendsComponent()}
-                            </View>
-
-                            {/* Add Friend */}
-                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-                                <Text style={{ color: COLORS.secondary }}>Add New</Text>
-                                <TouchableOpacity
-                                    style={{
-                                        marginLeft: SIZES.base,
-                                        width: 40,
-                                        height: 40,
-                                        borderRadius: 10,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        backgroundColor: COLORS.gray
-                                    }}
-                                    onPress={() => { console.log("Add friend on pressed") }}
-                                >
-                                    <Image
-                                        source={icons.plus}
-                                        resizeMode="contain"
-                                        style={{
-                                            width: 20,
-                                            height: 20
-                                        }}
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
+                    <TouchableOpacity onPress={()=>navigation.navigate('WebScreen')}>
+                        <Text style={{color:COLORS.primary,fontWeight:'bold',fontSize:18,marginTop:23}}>
+                        Ready to enter a whole new World?
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>navigation.navigate('QuestionScreen')}>
+                        <Text>Have any Questions?</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>

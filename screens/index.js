@@ -11,6 +11,8 @@ import QuestionScreen from './QuestionScreen';
 import ExtraScreen from './ExtraScreen';
 import PrivacyScreen from './PrivacyScreen';
 import TermsScreen from './TermsScreen';
+import UserProfileScreen from './UserProfileScreen';
+import WebScreen from './WebScreen';
 
 export {
     Home,
@@ -25,5 +27,7 @@ export {
     QuestionScreen,
     ExtraScreen,
     PrivacyScreen,
-    TermsScreen
+    TermsScreen,
+    UserProfileScreen,
+    WebScreen
 };
