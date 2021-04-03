@@ -8,7 +8,6 @@ import {
     Image,
     Animated
 } from "react-native";
-import { isIphoneX } from 'react-native-iphone-x-helper'
 
 import { icons, COLORS, SIZES, FONTS } from '../constants'
 
@@ -405,20 +404,6 @@ const Restaurant = ({ route, navigation }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-
-                {isIphoneX() &&
-                    <View
-                        style={{
-                            position: 'absolute',
-                            bottom: -34,
-                            left: 0,
-                            right: 0,
-                            height: 34,
-                            backgroundColor: COLORS.white
-                        }}
-                    >
-                    </View>
-                }
             </View>
         )
     }
