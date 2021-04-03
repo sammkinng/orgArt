@@ -111,7 +111,7 @@ const Home = ({ navigation }) => {
                 }}>
                     <View style={{ marginTop: SIZES.padding * 2, marginHorizontal: SIZES.padding }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Text style={{ color: COLORS.white }}>New Plants</Text>
+                            <Text style={{ color: COLORS.white }}>Explore New Plants</Text>
                             <TouchableOpacity
                                 onPress={() => navigation.navigate('UserProfileScreen')}
                             >
