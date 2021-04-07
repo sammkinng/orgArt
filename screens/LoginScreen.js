@@ -6,7 +6,6 @@ import {
   Image,
   Platform,
   StyleSheet,
-  ScrollView
 } from 'react-native';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
@@ -21,9 +20,9 @@ const LoginScreen = ({navigation}) => {
   const {login, googleLogin, fbLogin} = useContext(AuthContext);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <Image
-        source={require('../assets/orgartlogo.png')}
+        source={require('../assets/orguru.png')}
         style={styles.logo}
       />
 
@@ -73,6 +72,13 @@ const LoginScreen = ({navigation}) => {
       {Platform.OS === 'android' ? (
         <View>
           <SocialButton
+            buttonTitle="Sign In with Phone No."
+            btnType="phone"
+            color="#03ad6c"
+            backgroundColor="#d8f2e8"
+            onPress={() => navigation.navigate('PhoneAuth')}
+          />
+          <SocialButton
             buttonTitle="Sign In with Facebook"
             btnType="facebook"
             color="#4867aa"
@@ -97,7 +103,7 @@ const LoginScreen = ({navigation}) => {
           Don't have an account? Create here
         </Text>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -108,7 +114,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    paddingTop: 50
+    paddingTop: 50,
+    backgroundColor:'#fff',
+    flex:1
   },
   logo: {
     height: 150,

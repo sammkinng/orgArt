@@ -60,8 +60,8 @@ const OnboardingScreen = ({navigation}) => {
           {
             backgroundColor: '#401d04',
             image: <Image source={require('../assets/ofimg1.jpg')} />,
-            title: 'orgArt',
-            subtitle: 'A New Way To Study Organic Farming',
+            title: 'orGuru',
+            subtitle: 'Your Guru to learn Organic Farming',
           },
           {
             backgroundColor: '#fbebe4',

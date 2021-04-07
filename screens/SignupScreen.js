@@ -87,7 +87,7 @@ const handleConfirmPasswordChange = (val) => {
 //         confirm_secureTextEntry: !data.confirm_secureTextEntry
 //     });
 // }
-  const {register,fbLogin,googleLogin} = useContext(AuthContext);
+  const {fbSignUp,googleSignUp} = useContext(AuthContext);
 
   return (
     <KeyboardAwareScrollView 
@@ -144,7 +144,10 @@ const handleConfirmPasswordChange = (val) => {
           if(data['check_textInputChange']===false&&
             data['check_pw']===false&&
             data['check_pw_match']===false){
-          register(data['email'], data['password'])}
+          // register(data['email'], data['password'])
+          navigation.navigate('CreateUser',{uemail:data.email,upassword:data.password})
+          // navigation.navigate('EmailVerify')
+        }
         else{
           
         }
@@ -171,11 +174,18 @@ const handleConfirmPasswordChange = (val) => {
       {Platform.OS === 'android' ? (
         <View>
           <SocialButton
+            buttonTitle="Sign Up with Phone No."
+            btnType="phone"
+            color="#03ad6c"
+            backgroundColor="#d8f2e8"
+            onPress={() => navigation.navigate('PhoneAuth')}
+          />
+          <SocialButton
             buttonTitle="Sign Up with Facebook"
             btnType="facebook"
             color="#4867aa"
             backgroundColor="#e6eaf4"
-            onPress={() => fbLogin()}
+            onPress={() => fbSignUp()}
           />
     
           <SocialButton
@@ -183,7 +193,7 @@ const handleConfirmPasswordChange = (val) => {
             btnType="google"
             color="#de4d41"
             backgroundColor="#f5e7ea"
-            onPress={() => googleLogin()}
+            onPress={() => googleSignUp()}
           />
         </View>
        ) : null} 

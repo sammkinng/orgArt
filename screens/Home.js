@@ -1,5 +1,5 @@
 
-import React, { useContext } from 'react';
+import React, { useEffect ,useState} from 'react';
 import {
     StyleSheet,
     View,
@@ -7,53 +7,45 @@ import {
     TouchableOpacity,
     Image,
     FlatList,
+    ActivityIndicator
 } from 'react-native';
-import { windowHeight, windowWidth } from '../utils/Dimentions';
 
 import { images, icons, COLORS, SIZES } from '../constants';
+import firestore from '@react-native-firebase/firestore';
 
 const Home = ({ navigation }) => {
-
-    // Dummy Data
-    const [newPlants, setNewPlants] = React.useState([
-        {
-            id: 0,
-            name: "Plant 1",
-            img: images.plant1,
-            favourite: false,
-        },
-        {
-            id: 1,
-            name: "Plant 2",
-            img: images.plant2,
-            favourite: true,
-        },
-        {
-            id: 2,
-            name: "Plant 3",
-            img: images.plant3,
-            favourite: false,
-        },
-        {
-            id: 3,
-            name: "Plant 4",
-            img: images.plant4,
-            favourite: false,
-        },
-    ]);
-
-
-
-    React.useEffect(() => {
+    const [loading, setLoading] = useState(true); // Set loading to true on component mount
+    const [plants, setPlants] = useState([]);
+    useEffect(() => {
+        const subscriber = firestore()
+          .collection('Plants')
+          .onSnapshot(querySnapshot => {
+            const users = [];
+      
+            querySnapshot.forEach(documentSnapshot => {
+              users.push({
+                ...documentSnapshot.data(),
+                key: documentSnapshot.id,
+              });
+            });
+      
+            setPlants(users);
+            setLoading(false);
+          });
+      
+        // Unsubscribe from events when no longer in use
+        return () => subscriber();
     }, []);
-
+    if (loading) {
+        return <ActivityIndicator />;
+    }
     // Render
 
     function renderNewPlants(item, index) {
         return (
             <View style={{ alignItems: 'center', justifyContent: 'center', marginHorizontal: SIZES.base }}>
                 <Image
-                    source={item.img}
+                    source={{uri:item.img}}
                     resizeMode="cover"
                     style={{
                         width: SIZES.width * 0.23,
@@ -130,8 +122,8 @@ const Home = ({ navigation }) => {
                             <FlatList
                                 horizontal
                                 showsHorizontalScrollIndicator={false}
-                                data={newPlants}
-                                keyExtractor={item => item.id.toString()}
+                                data={plants}
+                                // keyExtractor={item => item.id.toString()}
                                 renderItem={({ item, index }) => renderNewPlants(item, index)}
                             />
                         </View>
