@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {GoogleSignin} from '@react-native-community/google-signin';
 // screens
-import { LoginScreen,OnboardingScreen,SignupScreen,ForgotScreen,TermsScreen,PrivacyScreen,CreateUser, PhoneAuth, FillOTP, EmailVerify} from "../screens/";
+import { LoginScreen,OnboardingScreen,SignupScreen,ForgotScreen,TermsScreen,PrivacyScreen,CreateUser, PhoneAuth} from "../screens/";
 import { useEffect } from "react";
 import  AsyncStorage  from "@react-native-community/async-storage";
 
@@ -162,29 +162,6 @@ const AuthStack=()=>{
             <Stack.Screen 
                 name="CreateUser"
                 component={CreateUser}
-                options={({navigation})=>({
-                    title:'',
-                    headerStyle:{
-                        backgroundColor:'#fff',
-                        shadowColor:'#fff',
-                        elevation:0
-                    },
-                    headerLeft:()=>(
-                        <View style={{marginLeft:10}}>
-                            <FontAwesome.Button
-                                name='long-arrow-left'
-                                size={25}
-                                backgroundColor='#fff'
-                                color="#333"
-                                onPress={()=>navigation.goBack()}
-                            />
-                        </View>
-                    ) 
-                })}
-            />
-            <Stack.Screen 
-                name="EmailVerify"
-                component={EmailVerify}
                 options={({navigation})=>({
                     title:'',
                     headerStyle:{

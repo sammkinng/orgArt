@@ -129,6 +129,7 @@ const CreateUser=({navigation,route})=>{
                 onPress={() => {
                     if(validForm()){
                        register(route.params.uemail,route.params.upassword,data.firstName,data.lastName,data.phone,data.city,data.address)
+                    //    navigation.navigate('EmailVerify')
                     }else{
                         console.log('not valid')
                     }

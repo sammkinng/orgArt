@@ -23,7 +23,7 @@ const UserProfileScreen=({navigation})=>{
     useEffect(()=>{
         getUser()
         user.providerData.forEach((userInfo) => {
-            console.log('User info for provider: ', userInfo);
+            console.log('User info for provider: ',userInfo,user);
           });
     },[navigation])
     return(

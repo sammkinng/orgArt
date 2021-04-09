@@ -9,11 +9,14 @@ export const AuthContext=createContext();
 
 export const AuthProvider=({children})=>{
     const [user,setUser]=useState(null);
+    const [confirm,setConfirm]=useState(null);
     return(
         <AuthContext.Provider
             value={{
                 user,
                 setUser,
+                confirm,
+                setConfirm,
                 login: async (email,password)=>{
                     try{
                         await auth().signInWithEmailAndPassword(email,password);
@@ -24,6 +27,29 @@ export const AuthProvider=({children})=>{
                             duration: Snackbar.LENGTH_SHORT,
                         });
                     }
+                },
+                phoneOTP:async(phoneNumber)=>{
+                    try {
+                        setConfirm(await auth().signInWithPhoneNumber(phoneNumber))
+                        console.log('otp sent')
+                    } catch (e) {
+                        console.log(e)
+                        Snackbar.show({
+                            text: 'Try Again',
+                            duration: Snackbar.LENGTH_SHORT,
+                        });
+                    }
+                },
+                verifyLogin:async(code)=>{
+                    try {
+                        await confirm.confirm(code);
+                      } catch (error) {
+                        console.log('Invalid code.',error);
+                        Snackbar.show({
+                            text: 'Invalid code',
+                            duration: Snackbar.LENGTH_SHORT,
+                        });
+                      }
                 },
                 googleLogin:async()=>{
                     try {
@@ -150,6 +176,16 @@ export const AuthProvider=({children})=>{
                             .catch(e=>{
                                 console.log('something went wrong while creating user')
                             })
+                        })
+                        .then(async()=>{
+                            await auth().currentUser.sendEmailVerification({
+                                handleCodeInApp: true,
+                                url: 'https://orguruemailverify.netlify.app',
+                               })
+                               .catch(e=>{
+                                   console.log(e,'email sent failed')
+                               })
+                               
                         })
                     }
                     catch(e){

@@ -15,7 +15,6 @@ import UserProfileScreen from './UserProfileScreen';
 import WebScreen from './WebScreen';
 import PhoneAuth from './PhoneAuth';
 import CreateUser from './CreateUser';
-import EmailVerify from './EmailVerify'
 
 export {
     Home,
@@ -35,5 +34,4 @@ export {
     WebScreen,
     PhoneAuth,
     CreateUser,
-    EmailVerify,
 };

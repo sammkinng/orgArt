@@ -1,17 +1,18 @@
-import React ,{useState,useEffect} from 'react';
+import React ,{useState,useEffect,useContext} from 'react';
 import {View,Text,StyleSheet,Image} from 'react-native';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import { useNavigationState} from "@react-navigation/native"
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import {AuthContext} from '../navigation/AuthProvider'
 
 const PhoneAuth=({navigation})=>{
+    const {phoneOTP,verifyLogin,confirm,setConfirm}=useContext(AuthContext);
     const [phone,setPhone]=useState();
     const [valid,setValid]=useState();
-    const [otpSent,setOtpSent]=useState(false);
     const [otp,setOtp]=useState();
     const [resend,setResend]=useState(false)
-    const [time,setTime]=useState(30);
+    const [time,setTime]=useState();
     const usePreviousRouteName=()=>{
         return useNavigationState(state =>
           state.routes[state.index - 1]?.name
@@ -29,19 +30,52 @@ const PhoneAuth=({navigation})=>{
         }
     }
     const p=usePreviousRouteName();
-    const counter=()=>{
-        setResend(true);
-        setTime(30)
-    }
     useEffect(()=>{
         if(time>0){
             setTimeout(()=>{setTime(time-1)},1000)
         }else{
             setResend(false)
         }
-    })
+    },[resend,time])
     return(
         <View style={styles.container}>
+            {confirm?
+            (<View style={{marginTop:58,flex:1,width:'100%',alignItems:'center'}}>
+                <Text style={[styles.navButtonText,{marginBottom:15}]}>OTP sent to +91 {phone}</Text>
+                <FormInput
+                    labelValue={otp}
+                    onChangeText={(userNo) => setOtp(userNo)}
+                    placeholderText="OTP"
+                    iconType="lock"
+                    keyboardType="numeric"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                />
+                <FormButton
+                    buttonTitle="Submit OTP"
+                    onPress={() => {
+                        if(p==='Login'){
+                            verifyLogin(otp)
+                        }else{
+                            navigation.navigate('CreateUser')
+                        }}
+                    }
+                />
+                <TouchableOpacity style={{marginTop:15}} onPress={()=>setConfirm(null)}>
+                    <Text style={styles.navButtonText}>Change Number?</Text>
+                </TouchableOpacity>
+                {resend?<TouchableOpacity style={{marginTop:15}}><Text style={styles.navButtonText}>Please try Again in {time} seconds</Text></TouchableOpacity>:
+                <TouchableOpacity style={{marginTop:15}} onPress={()=>{
+                    if(!resend){
+                    phoneOTP('+91 '+phone)
+                    setResend(true)
+                    setTime(30)
+                    }}} >
+                    <Text style={styles.navButtonText}>
+                        Resend OTP
+                    ?</Text>
+                </TouchableOpacity>}
+            </View>):<View style={{flex:1,width:'100%'}}>
             <Image
                 source={require('../assets/orguru.png')}
                 style={styles.logo}
@@ -63,39 +97,10 @@ const PhoneAuth=({navigation})=>{
                     </Text>: null}
             <FormButton
                 buttonTitle='Send OTP'
-                onPress={()=>{
-                    if(valid===false){
-                    setPhone(null)
-                    setOtpSent(true)}}}
-            />
-            {1?
-            (<View style={{marginTop:58,flex:1,width:'100%',alignItems:'center'}}>
-                <FormInput
-                    labelValue={otp}
-                    onChangeText={(userNo) => setOtp(userNo)}
-                    placeholderText="OTP"
-                    iconType="lock"
-                    keyboardType="numeric"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
-                <FormButton
-                    buttonTitle="Submit OTP"
-                    onPress={() => {
-                        if(p==='Login'){
-                            
-                        }else{
-                            navigation.navigate('CreateUser')
-                        }}
-                    }
-                />
-                {resend?<TouchableOpacity style={{marginTop:15}}><Text style={styles.navButtonText}>Please try Again in {time} seconds</Text></TouchableOpacity>:
-                <TouchableOpacity style={{marginTop:15}} onPress={()=>counter()} >
-                    <Text style={styles.navButtonText}>
-                        Resend OTP
-                    ?</Text>
-                </TouchableOpacity>}
-            </View>):null}
+                onPress={()=>{if(!confirm){
+                    phoneOTP('+91 '+phone)
+                    }}}
+            /></View>}
         </View>
     )
 }
