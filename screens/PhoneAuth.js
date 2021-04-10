@@ -7,12 +7,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import {AuthContext} from '../navigation/AuthProvider'
 
 const PhoneAuth=({navigation})=>{
-    const {phoneOTP,verifyLogin,confirm,setConfirm}=useContext(AuthContext);
+    const {phoneOTP,verifyLogin,verifySignIn,confirm,setConfirm}=useContext(AuthContext);
     const [phone,setPhone]=useState();
     const [valid,setValid]=useState();
     const [otp,setOtp]=useState();
     const [resend,setResend]=useState(false)
-    const [time,setTime]=useState();
+    const [time,setTime]=useState(60);
     const usePreviousRouteName=()=>{
         return useNavigationState(state =>
           state.routes[state.index - 1]?.name
@@ -34,7 +34,7 @@ const PhoneAuth=({navigation})=>{
         if(time>0){
             setTimeout(()=>{setTime(time-1)},1000)
         }else{
-            setResend(false)
+            setResend(true)
         }
     },[resend,time])
     return(
@@ -57,24 +57,28 @@ const PhoneAuth=({navigation})=>{
                         if(p==='Login'){
                             verifyLogin(otp)
                         }else{
-                            navigation.navigate('CreateUser')
+                            verifySignIn(otp)
                         }}
                     }
                 />
-                <TouchableOpacity style={{marginTop:15}} onPress={()=>setConfirm(null)}>
+                <TouchableOpacity style={{marginTop:15}} onPress={()=>{
+                    setConfirm(null)
+                    setOtp(null)
+                    setResend(null)
+                    setTime(60)
+                    }}>
                     <Text style={styles.navButtonText}>Change Number?</Text>
                 </TouchableOpacity>
-                {resend?<TouchableOpacity style={{marginTop:15}}><Text style={styles.navButtonText}>Please try Again in {time} seconds</Text></TouchableOpacity>:
-                <TouchableOpacity style={{marginTop:15}} onPress={()=>{
-                    if(!resend){
+                {resend?<TouchableOpacity style={{marginTop:15}} onPress={()=>{
                     phoneOTP('+91 '+phone)
-                    setResend(true)
-                    setTime(30)
-                    }}} >
+                    setResend(false)
+                    setTime(60)
+                    }}>
                     <Text style={styles.navButtonText}>
                         Resend OTP
                     ?</Text>
-                </TouchableOpacity>}
+                </TouchableOpacity>
+                :<Text style={[styles.navButtonText,{marginTop:15}]}>Resend Button will be enable  in {time} seconds</Text>}
             </View>):<View style={{flex:1,width:'100%'}}>
             <Image
                 source={require('../assets/orguru.png')}
@@ -97,9 +101,9 @@ const PhoneAuth=({navigation})=>{
                     </Text>: null}
             <FormButton
                 buttonTitle='Send OTP'
-                onPress={()=>{if(!confirm){
+                onPress={()=>{
                     phoneOTP('+91 '+phone)
-                    }}}
+                    }}
             /></View>}
         </View>
     )

@@ -40,9 +40,34 @@ export const AuthProvider=({children})=>{
                         });
                     }
                 },
+
                 verifyLogin:async(code)=>{
                     try {
                         await confirm.confirm(code);
+                      } catch (error) {
+                        console.log('Invalid code.',error);
+                        Snackbar.show({
+                            text: 'Invalid code',
+                            duration: Snackbar.LENGTH_SHORT,
+                        });
+                      }
+                },
+                verifySignIn:async(code)=>{
+                    try {
+                        await confirm.confirm(code)
+                        .then(()=>{
+                            firestore().collection('users').doc(auth().currentUser.uid)
+                            .set({
+                                fname: 'Test',
+                                lname: 'User',
+                                email: 'TestEmail',
+                                favPlants:[],
+                                createdAt: firestore.Timestamp.fromDate(new Date()),
+                                phone:auth().currentUser.phoneNumber?auth().currentUser.phoneNumber():'',
+                                city:'',
+                                address:''
+                            })
+                        })
                       } catch (error) {
                         console.log('Invalid code.',error);
                         Snackbar.show({
@@ -75,6 +100,7 @@ export const AuthProvider=({children})=>{
                                 fname: auth().currentUser.displayName.split(' ')[0],
                                 lname: auth().currentUser.displayName.split(' ')[1],
                                 email: auth().currentUser.email,
+                                favPlants:[],
                                 createdAt: firestore.Timestamp.fromDate(new Date()),
                                 phone:auth().currentUser.phoneNumber?auth().currentUser.phoneNumber():'',
                                 city:'',
@@ -144,6 +170,7 @@ export const AuthProvider=({children})=>{
                                 fname: auth().currentUser.displayName.split(' ')[0],
                                 lname: auth().currentUser.displayName.split(' ')[1],
                                 email: auth().currentUser.email,
+                                favPlants:[],
                                 createdAt: firestore.Timestamp.fromDate(new Date()),
                                 phone:auth().currentUser.phoneNumber?auth().currentUser.phoneNumber():'',
                                 city:'',
@@ -168,6 +195,7 @@ export const AuthProvider=({children})=>{
                                 fname:fname,
                                 lname:lname,
                                 email:email,
+                                favPlants:[],
                                 createdAt:firestore.Timestamp.fromDate(new Date()),
                                 phone:phone,
                                 city:city,

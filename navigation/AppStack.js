@@ -3,6 +3,7 @@ import { View,
         Image,
         TouchableOpacity
 } from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { createBottomTabNavigator ,BottomTabBar} from "@react-navigation/bottom-tabs";
 import {createStackNavigator} from '@react-navigation/stack'
 import Svg, { Path } from 'react-native-svg';

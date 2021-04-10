@@ -1,5 +1,5 @@
 
-import React, { useEffect ,useState} from 'react';
+import React, { useEffect ,useState,useContext} from 'react';
 import {
     StyleSheet,
     View,
@@ -12,29 +12,65 @@ import {
 
 import { images, icons, COLORS, SIZES } from '../constants';
 import firestore from '@react-native-firebase/firestore';
+import {AuthContext} from '../navigation/AuthProvider'
 
 const Home = ({ navigation }) => {
-    const [loading, setLoading] = useState(true); // Set loading to true on component mount
+    const {user}=useContext(AuthContext)
+    const [loading, setLoading] = useState(true);
+    const [fav,setFav]=useState([]);
     const [plants, setPlants] = useState([]);
-    useEffect(() => {
-        const subscriber = firestore()
-          .collection('Plants')
-          .onSnapshot(querySnapshot => {
-            const users = [];
-      
+    const getPlants=async()=>{
+        try {
+            await firestore()
+            .collection('Plants')
+            .onSnapshot(querySnapshot => {
+            const plants = [];
+        
             querySnapshot.forEach(documentSnapshot => {
-              users.push({
+                plants.push({
                 ...documentSnapshot.data(),
                 key: documentSnapshot.id,
-              });
+                });
             });
-      
-            setPlants(users);
-            setLoading(false);
-          });
-      
-        // Unsubscribe from events when no longer in use
-        return () => subscriber();
+            setPlants(plants);
+            }); 
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    const getFav=async()=>{
+        try {
+            await firestore()
+        .collection('users')
+        .doc(user.uid)
+        .get()
+        .then(documentSnapshot => {
+            setFav(documentSnapshot.data().favPlants)
+        })
+        } catch (e) {
+            console.log(e)
+        }
+        
+    }
+    const setFavs=async(arr)=>{
+        try {
+            await firestore()
+            .collection('users')
+            .doc(user.uid)
+            .update({
+                favPlants:arr
+            })
+            .then(() => {
+              console.log('Info updated!');
+            });
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    useEffect(() => {
+        getPlants()
+        getFav()
+        setLoading(false);
     }, []);
     if (loading) {
         return <ActivityIndicator />;
@@ -74,10 +110,25 @@ const Home = ({ navigation }) => {
                         top: '15%',
                         left: 7,
                     }}
-                    onPress={() => { }}
+                    onPress={() => { 
+                        if(fav.includes(index)){
+                            let arr=[...fav]
+                            // console.log(arr,'removing',index)
+                            let v=arr.indexOf(index)
+                            arr.splice(v,1)
+                            setFav(arr)
+                            setFavs(arr)
+                        }else{
+                            let arr=[...fav]
+                            // console.log(arr,'adding',index)
+                            arr.push(index)
+                            setFav(arr)
+                            setFavs(arr)
+                        }
+                    }}
                 >
                     <Image
-                        source={item.favourite ? icons.heartRed : icons.heartGreenOutline}
+                        source={fav.includes(index) ? icons.heartRed : icons.heartGreenOutline}
                         resizeMode="contain"
                         style={{
                             width: 20,
