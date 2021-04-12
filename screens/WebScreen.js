@@ -11,7 +11,7 @@ const WebScreen=({navigation})=>{
     
     return(
         // <WebView source={{uri:'https://happy-roentgen-d53470.netlify.app/'}}/>
-        <WebView source={{uri:'https://www.youtube.com/'}}
+        <WebView source={{uri:'https://happy-roentgen-d53470.netlify.app/'}}
             javaScriptEnabled={true}
             domStorageEnabled={true}
             renderLoading={Loader}

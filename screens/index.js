@@ -15,6 +15,7 @@ import UserProfileScreen from './UserProfileScreen';
 import WebScreen from './WebScreen';
 import PhoneAuth from './PhoneAuth';
 import CreateUser from './CreateUser';
+import ForumScreen from './ForumScreen'
 
 export {
     Home,
@@ -34,4 +35,5 @@ export {
     WebScreen,
     PhoneAuth,
     CreateUser,
+    ForumScreen,
 };

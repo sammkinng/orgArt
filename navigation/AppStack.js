@@ -8,7 +8,7 @@ import { createBottomTabNavigator ,BottomTabBar} from "@react-navigation/bottom-
 import {createStackNavigator} from '@react-navigation/stack'
 import Svg, { Path } from 'react-native-svg';
 import { COLORS ,icons} from "../constants";
-import { Home,PlantDetail,Restaurant, OrderDelivery ,Home1,QuestionScreen,ExtraScreen, UserProfileScreen, WebScreen,EmailVerify} from "../screens/";
+import { Home,PlantDetail,Restaurant, OrderDelivery ,Home1,QuestionScreen,ExtraScreen, UserProfileScreen, WebScreen,ForumScreen} from "../screens/";
 
 const Stack=createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -78,53 +78,39 @@ const CustomTabBar = (props) => {
 
 const HomeStack=()=>{
     return(
-             <Stack.Navigator
-                initialRouteName={'Home'}>
-                <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
-                <Stack.Screen name="PlantDetail" component={PlantDetail}  options={{ headerShown: false }}/>
-                <Stack.Screen name="WebScreen" component={WebScreen}options={{ headerShown: false }} />
-                <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} 
-                    options={({navigation})=>({
-                        title:'',
-                        headerStyle:{
-                            backgroundColor:'#fff',
-                            shadowColor:'#fff',
-                            elevation:0
-                        },
-                        headerLeft:()=>(
-                            <View style={{marginLeft:10}}>
-                                <FontAwesome.Button
-                                    name='long-arrow-left'
-                                    size={25}
-                                    backgroundColor='#fff'
-                                    color="#333"
-                                    onPress={()=>navigation.goBack()}
-                                />
-                            </View>
-                        ) 
-                    })}
-                />
-            </Stack.Navigator>
+        <Stack.Navigator
+        initialRouteName={'Home'}
+        screenOptions={{headerShown:false}}>
+        <Stack.Screen name="Home" component={Home}/>
+        <Stack.Screen name="PlantDetail" component={PlantDetail} />
+        <Stack.Screen name="WebScreen" component={WebScreen} />
+        <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
+    </Stack.Navigator>
     )
 }
 
 const AIStack=()=>(
-    <Stack.Navigator>
-        <Stack.Screen name="ExtraScreen" component={ExtraScreen} options={{ headerShown: false }}/>
+    <Stack.Navigator
+    screenOptions={{headerShown:false}}>
+        <Stack.Screen name="ExtraScreen" component={ExtraScreen} />
     </Stack.Navigator>
 )
 
 const QuestionStack=()=>(
-    <Stack.Navigator>
-        <Stack.Screen name="QuestionScreen" component={QuestionScreen} options={{ headerShown: false }}/>
+    <Stack.Navigator
+    initialRouteName={'ForumScreen'}
+    screenOptions={{headerShown:false}}>
+        <Stack.Screen name="QuestionScreen" component={QuestionScreen} />
+        <Stack.Screen name="ForumScreen" component={ForumScreen} />
     </Stack.Navigator>
 )
 
 const MartStack=()=>(
-    <Stack.Navigator>
-        <Stack.Screen name="Home1" component={Home1} options={{ headerShown: false }}/>
-        <Stack.Screen name="Restaurant" component={Restaurant} options={{ headerShown: false }} />
-        <Stack.Screen name="OrderDelivery" component={OrderDelivery} options={{ headerShown: false }}/>
+    <Stack.Navigator
+    screenOptions={{headerShown:false}}>
+        <Stack.Screen name="Home1" component={Home1} />
+        <Stack.Screen name="Restaurant" component={Restaurant}  />
+        <Stack.Screen name="OrderDelivery" component={OrderDelivery} />
     </Stack.Navigator>
 )
 

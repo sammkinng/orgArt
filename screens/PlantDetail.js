@@ -103,7 +103,7 @@ const PlantDetail = ({ navigation }) => {
                     <View style={{ flex: 1 }}>
                         <TouchableOpacity
                             style={{ width: 40, height: 40, alignItems: 'center', justifyContent: 'center', borderRadius: 20, backgroundColor: 'rgba(255,255,255,0.5)' }}
-                            onPress={() => { navigation.navigate("Home") }}
+                            onPress={() => { navigation.goBack()}}
                         >
                             <Image
                                 source={icons.back}

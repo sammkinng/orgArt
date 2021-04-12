@@ -79,7 +79,7 @@ const Home = ({ navigation }) => {
 
     function renderNewPlants(item, index) {
         return (
-            <View style={{ alignItems: 'center', justifyContent: 'center', marginHorizontal: SIZES.base }}>
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', marginHorizontal: SIZES.base }} onPress={()=>{navigation.navigate('PlantDetail')}} >
                 <Image
                     source={{uri:item.img}}
                     resizeMode="cover"
@@ -136,7 +136,7 @@ const Home = ({ navigation }) => {
                         }}
                     />
                 </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
         )
     }
 

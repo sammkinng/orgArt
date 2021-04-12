@@ -1,8 +1,8 @@
 import React, { useContext,useState ,useEffect} from 'react';
-import { View,StyleSheet,Text, Button ,TouchableOpacity} from 'react-native';
+import { View,StyleSheet,Text, Image ,TouchableOpacity} from 'react-native';
 import {AuthContext} from '../navigation/AuthProvider';
 import firestore from '@react-native-firebase/firestore';
-import {COLORS} from '../constants'
+import {icons,COLORS} from '../constants'
 
 
 const UserProfileScreen=({navigation})=>{
@@ -28,6 +28,19 @@ const UserProfileScreen=({navigation})=>{
     },[navigation])
     return(
         <View style={styles.container}>
+            <TouchableOpacity
+                style={{ width: 40, height: 40, alignItems: 'center', justifyContent: 'center', borderRadius: 20, backgroundColor: COLORS.primary,position:'absolute',left:20,top:20 }}
+                onPress={() => { navigation.goBack() }}
+            >
+                <Image
+                    source={icons.back}
+                    resizeMode="contain"
+                    style={{
+                        width: 20,
+                        height: 20
+                    }}
+                />
+            </TouchableOpacity>
             <View style={[styles.userImg,{backgroundColor:COLORS.primary}]}>
                 <Text style={{color:'#fff',fontSize:43}}>{userData?userData.fname.toUpperCase()[0]||'P':'P'} {userData?userData.lname.toUpperCase()[0]||'Y':'Y'}</Text>
             </View>
