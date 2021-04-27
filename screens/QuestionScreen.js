@@ -31,13 +31,13 @@ const QuestionScreen=({navigation})=>{
     console.log('Image Url: ', imageUrl);
     firestore()
     .collection('Questions')
-    .doc(user.uid)
-    .set({
+    .add({
       answers: [],
       img: imageUrl,
       postTime: firestore.Timestamp.fromDate(new Date()),
       upVotes: 0,
       ques: qstatement,
+      userId:user.uid
     })
     .then(() => {
       console.log('Question Added!');
@@ -46,7 +46,7 @@ const QuestionScreen=({navigation})=>{
         duration: Snackbar.LENGTH_SHORT,
       });
       setLoading(false)
-      navigation.navigate('ForumScreen')
+      navigation.goBack()
     })
     .catch((error) => {
       console.log('Something went wrong with added ques to firestore.', error);
@@ -54,7 +54,7 @@ const QuestionScreen=({navigation})=>{
   }
   const uploadImage = async (item) => {
     if( image == null ) {
-      return "";
+      return null;
     }
     const storageRef = storage().ref(`photos/${Date.now()+''}`);
     const task = storageRef.putFile(image);
@@ -138,7 +138,7 @@ const styles=StyleSheet.create({
   container:{
     flex:1,
     alignItems:'center',
-    // justifyContent:'center',
+    backgroundColor:COLORS.gray,
     padding:20
   },
   TextInputStyleClass:{

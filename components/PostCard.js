@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React, { useEffect, useState } from 'react';
+import Ionicons from 'react-native-vector-icons/FontAwesome';
+import { COLORS } from '../constants'
 
 import {
-  Container,
   Card,
   UserInfo,
   UserImg,
@@ -10,44 +10,21 @@ import {
   UserInfoText,
   PostTime,
   PostText,
-  PostImg,
   InteractionWrapper,
-  Interaction,
   InteractionText,
-  Divider,
-} from '../styles/FeedStyles';
+} from './FeedStyles';
 
 import ProgressiveImage from './ProgressiveImage';
 
-import {AuthContext} from '../navigation/AuthProvider';
+import { AuthContext } from '../navigation/AuthProvider';
 
 import moment from 'moment';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { TouchableOpacity, Text } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 
-const PostCard = ({item, onDelete, onPress}) => {
-  const {user, logout} = useContext(AuthContext);
+const PostCard = ({ item, upvote, onPress, downvote, screen }) => {
   const [userData, setUserData] = useState(null);
-
-  likeIcon = item.liked ? 'heart' : 'heart-outline';
-  likeIconColor = item.liked ? '#2e64e5' : '#333';
-
-  if (item.likes == 1) {
-    likeText = '1 Like';
-  } else if (item.likes > 1) {
-    likeText = item.likes + ' Likes';
-  } else {
-    likeText = 'Like';
-  }
-
-  if (item.comments == 1) {
-    commentText = '1 Comment';
-  } else if (item.comments > 1) {
-    commentText = item.comments + ' Comments';
-  } else {
-    commentText = 'Comment';
-  }
-
+  const likeIconColor = item.liked ? COLORS.primary : COLORS.secondary;
   const getUser = async () => {
     await firestore()
       .collection('users')
@@ -55,7 +32,6 @@ const PostCard = ({item, onDelete, onPress}) => {
       .get()
       .then((documentSnapshot) => {
         if (documentSnapshot.exists) {
-          console.log('User Data', documentSnapshot.data());
           setUserData(documentSnapshot.data());
         }
       });
@@ -64,56 +40,46 @@ const PostCard = ({item, onDelete, onPress}) => {
   useEffect(() => {
     getUser();
   }, []);
-
   return (
-    <Card key={item.id}>
+    <Card onPress={onPress}>
       <UserInfo>
-        <UserImg
-          source={{
-            uri: userData
-              ? userData.userImg ||
-                'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'
-              : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
-          }}
-        />
+        <UserImg>
+          <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }} >{userData ? userData.fname.toUpperCase()[0] || 'T' : 'T'}</Text>
+        </UserImg>
         <UserInfoText>
-          <TouchableOpacity onPress={onPress}>
-            <UserName>
-              {userData ? userData.fname || 'Test' : 'Test'}{' '}
-              {userData ? userData.lname || 'User' : 'User'}
-            </UserName>
-          </TouchableOpacity>
+
+          <UserName>
+            {userData ? userData.fname || 'Test' : 'Test'}{' '}
+            {userData ? userData.lname || 'User' : 'User'}
+          </UserName>
           <PostTime>{moment(item.postTime.toDate()).fromNow()}</PostTime>
         </UserInfoText>
+        {screen ? (<InteractionWrapper>
+
+          <TouchableOpacity onPress={()=>upvote(item.id)}>
+            <Ionicons name="angle-up" size={25} color={likeIconColor} />
+          </TouchableOpacity>
+          <InteractionText >{item.upVotes}</InteractionText>
+          <TouchableOpacity onPress={()=>downvote(item.id)} >
+            <Ionicons name="angle-down" size={25} color={likeIconColor} />
+          </TouchableOpacity>
+        </InteractionWrapper>) :
+          (
+            <InteractionWrapper>
+              <InteractionText >{item.upVotes} Upvotes</InteractionText>
+            </InteractionWrapper>
+          )
+        }
       </UserInfo>
-      <PostText>{item.post}</PostText>
-      {/* {item.postImg != null ? <PostImg source={{uri: item.postImg}} /> : <Divider />} */}
-      {item.postImg != null ? (
+      <PostText>{item.ques}</PostText>
+      {item.img != null ? (
         <ProgressiveImage
           defaultImageSource={require('../assets/default-img.jpg')}
-          source={{uri: item.postImg}}
-          style={{width: '100%', height: 250}}
+          source={{ uri: item.img }}
+          style={{ width: '100%', height: 250 }}
           resizeMode="cover"
         />
-      ) : (
-        <Divider />
-      )}
-
-      <InteractionWrapper>
-        <Interaction active={item.liked}>
-          <Ionicons name={likeIcon} size={25} color={likeIconColor} />
-          <InteractionText active={item.liked}>{likeText}</InteractionText>
-        </Interaction>
-        <Interaction>
-          <Ionicons name="md-chatbubble-outline" size={25} />
-          <InteractionText>{commentText}</InteractionText>
-        </Interaction>
-        {user.uid == item.userId ? (
-          <Interaction onPress={() => onDelete(item.id)}>
-            <Ionicons name="md-trash-bin" size={25} />
-          </Interaction>
-        ) : null}
-      </InteractionWrapper>
+      ) : null}
     </Card>
   );
 };

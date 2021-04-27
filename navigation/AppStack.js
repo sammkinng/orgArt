@@ -3,12 +3,12 @@ import { View,
         Image,
         TouchableOpacity
 } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome'
 import { createBottomTabNavigator ,BottomTabBar} from "@react-navigation/bottom-tabs";
 import {createStackNavigator} from '@react-navigation/stack'
 import Svg, { Path } from 'react-native-svg';
 import { COLORS ,icons} from "../constants";
-import { Home,PlantDetail,Restaurant, OrderDelivery ,Home1,QuestionScreen,ExtraScreen, UserProfileScreen, WebScreen,ForumScreen} from "../screens/";
+import { Home,PlantDetail,Restaurant, OrderDelivery ,Home1,QuestionScreen,ExtraScreen, UserProfileScreen, WebScreen,ForumScreen,AnsScreen, Pages} from "../screens/";
 
 const Stack=createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -85,6 +85,7 @@ const HomeStack=()=>{
         <Stack.Screen name="PlantDetail" component={PlantDetail} />
         <Stack.Screen name="WebScreen" component={WebScreen} />
         <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
+        <Stack.Screen name='Pages' component={Pages}/>
     </Stack.Navigator>
     )
 }
@@ -96,12 +97,35 @@ const AIStack=()=>(
     </Stack.Navigator>
 )
 
-const QuestionStack=()=>(
+const QuestionStack=({navigation})=>(
     <Stack.Navigator
-    initialRouteName={'ForumScreen'}
-    screenOptions={{headerShown:false}}>
-        <Stack.Screen name="QuestionScreen" component={QuestionScreen} />
-        <Stack.Screen name="ForumScreen" component={ForumScreen} />
+    initialRouteName={'Question Forum'}
+    >
+        <Stack.Screen name="AnsScreen" component={AnsScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="QuestionScreen" component={QuestionScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="Question Forum" component={ForumScreen} options={{
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          color: COLORS.primary,
+          fontWeight:'bold',
+          fontSize: 18,
+        },
+        headerStyle: {
+          shadowColor: '#fff',
+          elevation: 0,
+        },
+        headerRight: () => (
+          <View style={{marginRight: 10}}>
+            <FontAwesome5.Button
+              name="plus"
+              size={22}
+              backgroundColor="#fff"
+              color={COLORS.primary}
+              onPress={() => navigation.navigate('QuestionScreen')}
+            />
+          </View>
+        ),
+      }}/>
     </Stack.Navigator>
 )
 
@@ -182,7 +206,7 @@ const AppStack = () => {
             />
 
             <Tab.Screen
-                name="QuestionScreen"
+                name="Questions"
                 component={QuestionStack}
                 options={{
                     tabBarIcon: ({ focused }) => (

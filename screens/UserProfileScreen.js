@@ -41,7 +41,7 @@ const UserProfileScreen=({navigation})=>{
                     }}
                 />
             </TouchableOpacity>
-            <View style={[styles.userImg,{backgroundColor:COLORS.primary}]}>
+            <View style={[styles.userImg,{backgroundColor:'#8f37ed'}]}>
                 <Text style={{color:'#fff',fontSize:43}}>{userData?userData.fname.toUpperCase()[0]||'P':'P'} {userData?userData.lname.toUpperCase()[0]||'Y':'Y'}</Text>
             </View>
             <Text style={styles.userName}>
@@ -88,7 +88,7 @@ export default UserProfileScreen;
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: COLORS.gray,
       padding: 20,
       alignItems:'center'
     },

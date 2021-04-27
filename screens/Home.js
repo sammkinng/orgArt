@@ -1,5 +1,4 @@
-
-import React, { useEffect ,useState,useContext} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
     StyleSheet,
     View,
@@ -12,57 +11,57 @@ import {
 
 import { images, icons, COLORS, SIZES } from '../constants';
 import firestore from '@react-native-firebase/firestore';
-import {AuthContext} from '../navigation/AuthProvider'
+import { AuthContext } from '../navigation/AuthProvider'
 
 const Home = ({ navigation }) => {
-    const {user}=useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     const [loading, setLoading] = useState(true);
-    const [fav,setFav]=useState([]);
+    const [fav, setFav] = useState([]);
     const [plants, setPlants] = useState([]);
-    const getPlants=async()=>{
+    const getPlants = async () => {
         try {
             await firestore()
-            .collection('Plants')
-            .onSnapshot(querySnapshot => {
-            const plants = [];
-        
-            querySnapshot.forEach(documentSnapshot => {
-                plants.push({
-                ...documentSnapshot.data(),
-                key: documentSnapshot.id,
+                .collection('Plants')
+                .onSnapshot(querySnapshot => {
+                    const plants = [];
+
+                    querySnapshot.forEach(documentSnapshot => {
+                        plants.push({
+                            ...documentSnapshot.data(),
+                            key: documentSnapshot.id,
+                        });
+                    });
+                    setPlants(plants);
                 });
-            });
-            setPlants(plants);
-            }); 
         } catch (e) {
             console.log(e)
         }
     }
-    const getFav=async()=>{
+    const getFav = async () => {
         try {
             await firestore()
-        .collection('users')
-        .doc(user.uid)
-        .get()
-        .then(documentSnapshot => {
-            setFav(documentSnapshot.data().favPlants)
-        })
+                .collection('users')
+                .doc(user.uid)
+                .get()
+                .then(documentSnapshot => {
+                    setFav(documentSnapshot.data().favPlants)
+                })
         } catch (e) {
             console.log(e)
         }
-        
+
     }
-    const setFavs=async(arr)=>{
+    const setFavs = async (arr) => {
         try {
             await firestore()
-            .collection('users')
-            .doc(user.uid)
-            .update({
-                favPlants:arr
-            })
-            .then(() => {
-              console.log('Info updated!');
-            });
+                .collection('users')
+                .doc(user.uid)
+                .update({
+                    favPlants: arr
+                })
+                .then(() => {
+                    console.log('Info updated!');
+                });
         } catch (e) {
             console.log(e)
         }
@@ -79,9 +78,9 @@ const Home = ({ navigation }) => {
 
     function renderNewPlants(item, index) {
         return (
-            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', marginHorizontal: SIZES.base }} onPress={()=>{navigation.navigate('PlantDetail')}} >
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', marginHorizontal: SIZES.base }} onPress={() => { navigation.navigate('Pages',{page:item.page}) }} >
                 <Image
-                    source={{uri:item.img}}
+                    source={{ uri: item.img }}
                     resizeMode="cover"
                     style={{
                         width: SIZES.width * 0.23,
@@ -110,16 +109,16 @@ const Home = ({ navigation }) => {
                         top: '15%',
                         left: 7,
                     }}
-                    onPress={() => { 
-                        if(fav.includes(index)){
-                            let arr=[...fav]
+                    onPress={() => {
+                        if (fav.includes(index)) {
+                            let arr = [...fav]
                             // console.log(arr,'removing',index)
-                            let v=arr.indexOf(index)
-                            arr.splice(v,1)
+                            let v = arr.indexOf(index)
+                            arr.splice(v, 1)
                             setFav(arr)
                             setFavs(arr)
-                        }else{
-                            let arr=[...fav]
+                        } else {
+                            let arr = [...fav]
                             // console.log(arr,'adding',index)
                             arr.push(index)
                             setFav(arr)
@@ -154,7 +153,7 @@ const Home = ({ navigation }) => {
                 }}>
                     <View style={{ marginTop: SIZES.padding * 2, marginHorizontal: SIZES.padding }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Text style={{ color: COLORS.white }}>Explore New Plants</Text>
+                            <Text style={{ color: COLORS.white }}>Explore New Crops</Text>
                             <TouchableOpacity
                                 onPress={() => navigation.navigate('UserProfileScreen')}
                             >
@@ -163,7 +162,8 @@ const Home = ({ navigation }) => {
                                     resizeMode="contain"
                                     style={{
                                         width: 20,
-                                        height: 20
+                                        height: 20,
+                                        tintColor: '#fff'
                                     }}
                                 />
                             </TouchableOpacity>
@@ -192,10 +192,10 @@ const Home = ({ navigation }) => {
                 }}>
                     <View style={{ marginTop: SIZES.font, marginHorizontal: SIZES.padding }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Text style={{ color: COLORS.secondary }}>Today's Share</Text>
+                            <Text style={{ color: COLORS.secondary }}>Hot Topics</Text>
 
                             <TouchableOpacity
-                                onPress={() => { console.log("See All on pressed") }}
+                                onPress={() => { navigation.navigate('WebScreen') }}
                             >
                                 <Text style={{ color: COLORS.secondary }}>See All</Text>
                             </TouchableOpacity>
@@ -205,10 +205,10 @@ const Home = ({ navigation }) => {
                             <View style={{ flex: 1 }}>
                                 <TouchableOpacity
                                     style={{ flex: 1 }}
-                                    onPress={() => { navigation.navigate("PlantDetail") }}
+                                    onPress={() => { navigation.navigate("Pages",{page:'manures'}) }}
                                 >
                                     <Image
-                                        source={images.plant5}
+                                        source={{uri:'https://5.imimg.com/data5/HO/IF/MY-14607085/manure-1-500x500.jpg'}}
                                         resizeMode="cover"
                                         style={{
                                             width: '100%',
@@ -216,14 +216,27 @@ const Home = ({ navigation }) => {
                                             borderRadius: 20
                                         }}
                                     />
+                                    <View
+                                        style={{
+                                            position: 'absolute',
+                                            bottom: '17%',
+                                            right: 0,
+                                            backgroundColor: COLORS.primary,
+                                            paddingHorizontal: SIZES.base,
+                                            borderTopLeftRadius: 10,
+                                            borderBottomLeftRadius: 10,
+                                        }}
+                                    >
+                                        <Text style={{ color: COLORS.white }}>Manures</Text>
+                                    </View>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity
                                     style={{ flex: 1, marginTop: SIZES.font }}
-                                    onPress={() => { navigation.navigate("PlantDetail") }}
+                                    onPress={() => { navigation.navigate("Pages",{page:'iwm'}) }}
                                 >
                                     <Image
-                                        source={images.plant6}
+                                        source={{uri:'https://www.smallfootprintfamily.com/wp-content/uploads/Organic-Weed-Control.jpg'}}
                                         resizeMode="cover"
                                         style={{
                                             width: '100%',
@@ -231,15 +244,28 @@ const Home = ({ navigation }) => {
                                             borderRadius: 20
                                         }}
                                     />
+                                    <View
+                                        style={{
+                                            position: 'absolute',
+                                            bottom: '17%',
+                                            right: 0,
+                                            backgroundColor: COLORS.primary,
+                                            paddingHorizontal: SIZES.base,
+                                            borderTopLeftRadius: 10,
+                                            borderBottomLeftRadius: 10,
+                                        }}
+                                    >
+                                        <Text style={{ color: COLORS.white }}>Weed Control</Text>
+                                    </View>
                                 </TouchableOpacity>
                             </View>
                             <View style={{ flex: 1.3 }}>
                                 <TouchableOpacity
                                     style={{ flex: 1, marginLeft: SIZES.font }}
-                                    onPress={() => { navigation.navigate("PlantDetail") }}
+                                    onPress={() => { navigation.navigate("Pages",{page:'mpestcontrol'}) }}
                                 >
                                     <Image
-                                        source={images.plant7}
+                                        source={{uri:'https://i1.wp.com/www.gardeningchannel.com/wp-content/uploads/2014/04/7-114.jpg?resize=600%2C900&ssl=1'}}
                                         resizeMode="cover"
                                         style={{
                                             width: '100%',
@@ -247,6 +273,19 @@ const Home = ({ navigation }) => {
                                             borderRadius: 20
                                         }}
                                     />
+                                    <View
+                                        style={{
+                                            position: 'absolute',
+                                            bottom: '17%',
+                                            right: 0,
+                                            backgroundColor: COLORS.primary,
+                                            paddingHorizontal: SIZES.base,
+                                            borderTopLeftRadius: 10,
+                                            borderBottomLeftRadius: 10,
+                                        }}
+                                    >
+                                        <Text style={{ color: COLORS.white }}>Pest Control</Text>
+                                    </View>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -260,12 +299,12 @@ const Home = ({ navigation }) => {
                     backgroundColor: COLORS.lightGray,
                     alignItems: 'center'
                 }}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('WebScreen')}>
-                        <Text style={{color:COLORS.primary,fontWeight:'bold',fontSize:18,marginTop:23}}>
-                        Ready to enter a whole new World?
+                    <TouchableOpacity onPress={() => navigation.navigate('WebScreen')}>
+                        <Text style={{ color: COLORS.primary, fontWeight: 'bold', fontSize: 18, marginTop: 23 }}>
+                            Ready to enter a whole new World?
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>navigation.navigate('QuestionScreen')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Question Forum')}>
                         <Text>Have any Questions?</Text>
                     </TouchableOpacity>
                 </View>

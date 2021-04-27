@@ -26,17 +26,17 @@ const Home1 = ({ navigation }) => {
     const categoryData = [
         {
             id: 1,
-            name: "Rice",
+            name: "Tomato",
             icon: icons.rice_bowl,
         },
         {
             id: 2,
-            name: "Noodles",
+            name: "Garlic",
             icon: icons.noodle,
         },
         {
             id: 3,
-            name: "Hot Dogs",
+            name: "Onion",
             icon: icons.hotdog,
         },
         {
@@ -46,32 +46,32 @@ const Home1 = ({ navigation }) => {
         },
         {
             id: 5,
-            name: "Burgers",
+            name: "Potato",
             icon: icons.hamburger,
         },
         {
             id: 6,
-            name: "Pizza",
+            name: "Sweet-Potato",
             icon: icons.pizza,
         },
         {
             id: 7,
-            name: "Snacks",
+            name: "BottleGuard",
             icon: icons.fries,
         },
         {
             id: 8,
-            name: "Sushi",
+            name: "Kale",
             icon: icons.sushi,
         },
         {
             id: 9,
-            name: "Desserts",
+            name: "CauliFlower",
             icon: icons.donut,
         },
         {
             id: 10,
-            name: "Drinks",
+            name: "Carrot",
             icon: icons.drink,
         },
 

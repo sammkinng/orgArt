@@ -16,6 +16,8 @@ import WebScreen from './WebScreen';
 import PhoneAuth from './PhoneAuth';
 import CreateUser from './CreateUser';
 import ForumScreen from './ForumScreen'
+import AnsScreen from './AnsScreen'
+import Pages from './Pages'
 
 export {
     Home,
@@ -36,4 +38,6 @@ export {
     PhoneAuth,
     CreateUser,
     ForumScreen,
+    AnsScreen,
+    Pages
 };
