@@ -153,6 +153,16 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+            signingConfigs {
+        release {
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            }
+        }
+    }
     }
     buildTypes {
         debug {
@@ -188,7 +198,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
+    implementation project(':react-native-splash-screen')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
     implementation 'com.android.support:multidex:1.0.3'

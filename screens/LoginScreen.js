@@ -22,7 +22,7 @@ const LoginScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../assets/orguru.png')}
+        source={require('../assets/orgurru.png')}
         style={styles.logo}
       />
 

@@ -81,7 +81,7 @@ const PhoneAuth=({navigation})=>{
                 :<Text style={[styles.navButtonText,{marginTop:15}]}>Resend Button will be enable  in {time} seconds</Text>}
             </View>):<View style={{flex:1,width:'100%'}}>
             <Image
-                source={require('../assets/orguru.png')}
+                source={require('../assets/orgurru.png')}
                 style={styles.logo}
             />
             <Text style={styles.text}>

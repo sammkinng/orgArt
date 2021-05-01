@@ -87,7 +87,8 @@ const Restaurant = ({ route, navigation }) => {
                     style={{
                         width: 50,
                         paddingLeft: SIZES.padding * 2,
-                        justifyContent: 'center'
+                        justifyContent: 'center',
+                        alignItems:'center'
                     }}
                     onPress={() => navigation.goBack()}
                 >
@@ -96,7 +97,8 @@ const Restaurant = ({ route, navigation }) => {
                         resizeMode="contain"
                         style={{
                             width: 30,
-                            height: 30
+                            height: 30,
+                            tintColor:COLORS.primary
                         }}
                     />
                 </TouchableOpacity>
@@ -168,7 +170,8 @@ const Restaurant = ({ route, navigation }) => {
                                     resizeMode="cover"
                                     style={{
                                         width: SIZES.width,
-                                        height: "100%"
+                                        height: "90%",
+                                        // zIndex:-1
                                     }}
                                 />
 
@@ -176,7 +179,7 @@ const Restaurant = ({ route, navigation }) => {
                                 <View
                                     style={{
                                         position: 'absolute',
-                                        bottom: - 20,
+                                        bottom: 10,
                                         width: SIZES.width,
                                         height: 50,
                                         justifyContent: 'center',
@@ -229,7 +232,7 @@ const Restaurant = ({ route, navigation }) => {
                                 style={{
                                     width: SIZES.width,
                                     alignItems: 'center',
-                                    marginTop: 15,
+                                    marginTop: 5,
                                     paddingHorizontal: SIZES.padding * 2
                                 }}
                             >
@@ -264,65 +267,61 @@ const Restaurant = ({ route, navigation }) => {
         )
     }
 
-    function renderDots() {
+    // function renderDots() {
 
-        const dotPosition = Animated.divide(scrollX, SIZES.width)
+    //     const dotPosition = Animated.divide(scrollX, SIZES.width)
 
-        return (
-            <View style={{ height: 30 }}>
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        height: SIZES.padding
-                    }}
-                >
-                    {restaurant?.menu.map((item, index) => {
+    //     return (
+    //         <View style={{ height: 30 }}>
+    //             <View
+    //                 style={{
+    //                     flexDirection: 'row',
+    //                     alignItems: 'center',
+    //                     justifyContent: 'center',
+    //                     height: SIZES.padding
+    //                 }}
+    //             >
+    //                 {restaurant?.menu.map((item, index) => {
 
-                        const opacity = dotPosition.interpolate({
-                            inputRange: [index - 1, index, index + 1],
-                            outputRange: [0.3, 1, 0.3],
-                            extrapolate: "clamp"
-                        })
+    //                     const opacity = dotPosition.interpolate({
+    //                         inputRange: [index - 1, index, index + 1],
+    //                         outputRange: [0.3, 1, 0.3],
+    //                         extrapolate: "clamp"
+    //                     })
 
-                        const dotSize = dotPosition.interpolate({
-                            inputRange: [index - 1, index, index + 1],
-                            outputRange: [SIZES.base * 0.8, 10, SIZES.base * 0.8],
-                            extrapolate: "clamp"
-                        })
+    //                     const dotSize = dotPosition.interpolate({
+    //                         inputRange: [index - 1, index, index + 1],
+    //                         outputRange: [SIZES.base * 0.8, 10, SIZES.base * 0.8],
+    //                         extrapolate: "clamp"
+    //                     })
 
-                        const dotColor = dotPosition.interpolate({
-                            inputRange: [index - 1, index, index + 1],
-                            outputRange: [COLORS.darkgray, COLORS.primary, COLORS.darkgray],
-                            extrapolate: "clamp"
-                        })
+    //                     const dotColor = dotPosition.interpolate({
+    //                         inputRange: [index - 1, index, index + 1],
+    //                         outputRange: [COLORS.darkgray, COLORS.primary, COLORS.darkgray],
+    //                         extrapolate: "clamp"
+    //                     })
 
-                        return (
-                            <Animated.View
-                                key={`dot-${index}`}
-                                opacity={opacity}
-                                style={{
-                                    borderRadius: SIZES.radius,
-                                    marginHorizontal: 6,
-                                    width: dotSize,
-                                    height: dotSize,
-                                    backgroundColor: dotColor
-                                }}
-                            />
-                        )
-                    })}
-                </View>
-            </View>
-        )
-    }
+    //                     return (
+    //                         <Animated.View
+    //                             key={`dot-${index}`}
+    //                             opacity={opacity}
+    //                             style={{
+    //                                 borderRadius: SIZES.radius,
+    //                                 marginHorizontal: 6,
+    //                                 width: dotSize,
+    //                                 height: dotSize,
+    //                                 backgroundColor: dotColor
+    //                             }}
+    //                         />
+    //                     )
+    //                 })}
+    //             </View>
+    //         </View>
+    //     )
+    // }
 
     function renderOrder() {
         return (
-            <View>
-                {
-                    renderDots()
-                }
                 <View
                     style={{
                         backgroundColor: COLORS.white,
@@ -334,52 +333,30 @@ const Restaurant = ({ route, navigation }) => {
                         style={{
                             flexDirection: 'row',
                             justifyContent: 'space-between',
-                            paddingVertical: SIZES.padding * 2,
+                            paddingVertical: 30,
                             paddingHorizontal: SIZES.padding * 3,
                             borderBottomColor: COLORS.lightGray2,
                             borderBottomWidth: 1
                         }}
                     >
                         <Text >{getBasketItemCount()} items in Cart</Text>
-                        <Text >${sumOrder()}</Text>
+                        <Text >Rs {sumOrder()}</Text>
                     </View>
-
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            paddingVertical: SIZES.padding * 2,
-                            paddingHorizontal: SIZES.padding * 3
-                        }}
-                    >
-                        <View style={{ flexDirection: 'row' }}>
-                            <Image
-                                source={icons.pin}
-                                resizeMode="contain"
-                                style={{
-                                    width: 20,
-                                    height: 20,
-                                    tintColor: COLORS.darkgray
-                                }}
-                            />
-                            <Text style={{ marginLeft: SIZES.padding}}>Location</Text>
-                        </View>
-
-                        <View style={{ flexDirection: 'row' }}>
-                            <Image
-                                source={icons.master_card}
-                                resizeMode="contain"
-                                style={{
-                                    width: 20,
-                                    height: 20,
-                                    tintColor: COLORS.darkgray
-                                }}
-                            />
-                            <Text style={{ marginLeft: SIZES.padding }}>8888</Text>
-                        </View>
-                    </View>
-
+                    {/* <View style={{flexDirection:'row',width:'100%',marginTop:30}}> */}
+                        <Text style={{fontSize:16,color:COLORS.primary,fontWeight:'bold',marginTop:10,position:'relative',left:20}}>
+                            Deliver to:
+                        </Text>
+                        <Text style={{position:'relative',left:20}}>
+                            Vill:Khera alampur, Rewari,123035, near shiv mandir
+                        </Text>
+                    {/* </View> */}
+                    <TouchableOpacity style={{width:200,height:50,backgroundColor:COLORS.gray,borderRadius:25,justifyContent:'center',alignItems:'center',marginTop:30,position:'relative',left:100}}>
+                        <Text style={{}}>
+                            Change Delivery Address
+                        </Text>
+                    </TouchableOpacity>
                     {/* Order Button */}
+
                     <View
                         style={{
                             padding: SIZES.padding * 2,
@@ -395,16 +372,14 @@ const Restaurant = ({ route, navigation }) => {
                                 alignItems: 'center',
                                 borderRadius: SIZES.radius
                             }}
-                            onPress={() => navigation.navigate("OrderDelivery", {
-                                restaurant: restaurant,
-                                currentLocation: currentLocation
-                            })}
+                            onPress={() => {alert('Your Order has been Placed')
+                            navigation.goBack()
+                        }}
                         >
                             <Text style={{ color: COLORS.white}}>Order</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View>
         )
     }
 

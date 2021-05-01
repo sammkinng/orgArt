@@ -8,7 +8,7 @@ import { createBottomTabNavigator ,BottomTabBar} from "@react-navigation/bottom-
 import {createStackNavigator} from '@react-navigation/stack'
 import Svg, { Path } from 'react-native-svg';
 import { COLORS ,icons} from "../constants";
-import { Home,PlantDetail,Restaurant, OrderDelivery ,Home1,QuestionScreen,ExtraScreen, UserProfileScreen, WebScreen,ForumScreen,AnsScreen, Pages} from "../screens/";
+import { Home,PlantDetail,Restaurant,Home1,QuestionScreen,ExtraScreen, UserProfileScreen, WebScreen,ForumScreen,AnsScreen, Pages} from "../screens/";
 
 const Stack=createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -134,7 +134,6 @@ const MartStack=()=>(
     screenOptions={{headerShown:false}}>
         <Stack.Screen name="Home1" component={Home1} />
         <Stack.Screen name="Restaurant" component={Restaurant}  />
-        <Stack.Screen name="OrderDelivery" component={OrderDelivery} />
     </Stack.Navigator>
 )
 
