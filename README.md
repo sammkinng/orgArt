@@ -2,5 +2,7 @@ This app 'orgArt' is practicum project of me and <a href="">Abhinav Bhatt</a>.<b
 This app is and education cum shopping app.<br>
 This app educates you about organic farming from tip to toe and allows you to buy organic foods as well as starter packs and equipments for organic farming.<br>
 This app is built in react native and use firebase as database.<br>
-It is submitted as practicum projrct in IIIT SONEPAT Copyright &copy 2021 samm.pvt.ltd<br>
+It is submitted as practicum project in IIIT SONEPAT Copyright &copy 2021 samm.pvt.ltd<br>
 This app is under development.
+
+<h1>ScreenShots</h1>
