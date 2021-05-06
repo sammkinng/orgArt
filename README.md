@@ -6,4 +6,4 @@ It is submitted as practicum project in IIIT SONEPAT Copyright &copy 2021 samm.p
 This app is under development.
 
 <h1>ScreenShots</h1>
-<img src='Capture+_2021-05-03-18-54-43.png' width='100',height='auto'/>
+<img src='Capture+_2021-05-03-18-54-43.png' width='500',height='auto'/>
